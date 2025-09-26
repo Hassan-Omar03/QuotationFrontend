@@ -363,7 +363,7 @@ function App() {
                 <a href="#" className="block text-white text-sm">Home</a>
                 <a href="#" className="block text-white text-sm">About Us</a>
                 <a href="/" className="block text-white text-sm">Services</a>
-                <a href="#" className="block text-white text-sm">BLOG</a>
+                <a href="#" className="block text-white text-sm">Blog</a>
               </div>
             </div>
             <div>
@@ -431,7 +431,7 @@ function App() {
           <div className="text-center text-white text-xs border-t border-gray-800 pt-6">
             <a href="#" className="hover:text-[#ff1f00]">Privacy Policy</a>
             <span className="mx-2">|</span>
-            <a href="#" className="hover:text-[#ff1f00]">Terms of Use</a>
+            <a href="#" className="hover:text-[#ff1f00]">Terms of Service</a>
           </div>
         </div>
 
@@ -460,7 +460,7 @@ function App() {
             <div className="space-y-1 sm:space-y-2 lg:space-y-3 mt-3 sm:mt-4">
               <a href="/contactus" className="block text-white hover:text-white text-xs sm:text-sm lg:text-base">Contact Us</a>
               <a href="#" className="block text-white hover:text-white text-xs sm:text-sm lg:text-base">Privacy Policy</a>
-              <a href="#" className="block text-white hover:text-white text-xs sm:text-sm lg:text-base">Terms of Use</a>
+              <a href="#" className="block text-white hover:text-white text-xs sm:text-sm lg:text-base">Terms of Service</a>
             </div>
           </div>
 
@@ -504,7 +504,7 @@ function App() {
         <div className="hidden sm:block border-t border-gray-800 mt-6 sm:mt-8 lg:mt-12 pt-4 sm:pt-6 lg:pt-8 text-center text-white text-xs sm:text-sm">
           <a href="#" className="hover:text-white">Privacy Policy</a>{" "}
           |{" "}
-          <a href="#" className="hover:text-white">Terms of Use</a>
+          <a href="#" className="hover:text-white">Terms of Service</a>
         </div>
       </div>
     </footer>
