@@ -1274,30 +1274,30 @@ const QuotationTool: React.FC = () => {
             </div>
 
             <div className="bg-[#0b0b0b] border border-[#1f2937] rounded-lg p-4 sm:p-6 mb-8 text-center">
-              <h2 className="text-lg sm:text-xl font-semibold mb-4 text-red-700">Quote Summary</h2>
+              <h2 className="text-lg sm:text-xl font-semibold mb-4 text-[#ff1f00]">Quote Summary</h2>
               <div className="space-y-2 text-sm sm:text-base">
-                <div className="flex justify-between text-red-700"><span>Country:</span><span className="font-medium capitalize">{formData.country || "—"}</span></div>
-                <div className="flex justify-between text-red-700"><span>Website Type:</span><span className="font-medium capitalize">{formData.websiteType || "—"}</span></div>
+                <div className="flex justify-between text-[#ff1f00]"><span>Country:</span><span className="font-medium capitalize">{formData.country || "—"}</span></div>
+                <div className="flex justify-between text-[#ff1f00]"><span>Website Type:</span><span className="font-medium capitalize">{formData.websiteType || "—"}</span></div>
                 {formData.websiteType !== "landing" && formData.websiteType !== "ecommerce" && (<div className="flex justify-between"><span>Pages:</span><span className="font-medium capitalize">{formData.pages || "—"}</span></div>)}
-                <div className="flex justify-between text-red-700"><span>Design:</span><span className="font-medium capitalize">{formData.designStyle || "—"}</span></div>
-                <div className="flex justify-between text-red-700"><span>Features:</span><span className="font-medium capitalize">{formData.features.map(f => f.replace(/-/g, " ")).join(", ") || "None"}</span></div>
-                <div className="flex justify-between text-red-700"><span>Timeline:</span><span className="font-medium capitalize">{formData.timeline || "—"}</span></div>
-                <div className="flex justify-between text-red-700"><span>Hosting:</span><span className="font-medium capitalize">{formData.hosting || "—"}</span></div>
-                <div className="flex justify-between text-red-700"><span>Domain:</span><span className="font-medium capitalize">{formData.domain || "—"}</span></div>
-                <div className="flex justify-between text-red-700"><span>Number:</span><span className="font-medium">{formData.whatsappNumber || "—"}</span></div>
+                <div className="flex justify-between text-[#ff1f00]"><span>Design:</span><span className="font-medium capitalize">{formData.designStyle || "—"}</span></div>
+                <div className="flex justify-between text-[#ff1f00]"><span>Features:</span><span className="font-medium capitalize">{formData.features.map(f => f.replace(/-/g, " ")).join(", ") || "None"}</span></div>
+                <div className="flex justify-between text-[#ff1f00]"><span>Timeline:</span><span className="font-medium capitalize">{formData.timeline || "—"}</span></div>
+                <div className="flex justify-between text-[#ff1f00]"><span>Hosting:</span><span className="font-medium capitalize">{formData.hosting || "—"}</span></div>
+                <div className="flex justify-between text-[#ff1f00]"><span>Domain:</span><span className="font-medium capitalize">{formData.domain || "—"}</span></div>
+                <div className="flex justify-between text-[#ff1f00]"><span>Number:</span><span className="font-medium">{formData.whatsappNumber || "—"}</span></div>
                 <hr className="my-4" />
-                <div className="flex justify-between text-base sm:text-lg font-bold text-red-700">
+                <div className="flex justify-between text-base sm:text-lg font-bold text-[#ff1f00]">
                   <span>Final Price:</span>
                   <span className="red-700">{finalCurrency} {Math.round(finalAmount).toLocaleString()}</span>
                 </div>
               </div>
             </div>
 
-            <div className="text-center text-red-700">
+            <div className="text-center text-[#ff1f00]">
               <p className="mb-2">We will contact you shortly to discuss further.</p>
               <p className="font-medium">Best Regards,</p>
               <p className="font-bold">Sales Team - BIM Africa</p>
-              <a className="text-red-700" href="https://bim.africa/" target="_blank" rel="noreferrer">www.bim.africa</a>
+              <a className="text-[#ff1f00]" href="https://bim.africa/" target="_blank" rel="noreferrer">www.bim.africa</a>
             </div>
           </div>
         </div>
@@ -1314,24 +1314,24 @@ const QuotationTool: React.FC = () => {
             
           </div>
           <h1 className="md:text-4xl text-2xl font-bold mb-4">
-            <span className="text-red-700">Instant </span>
+            <span className="text-[#ff1f00]">Instant </span>
             <span className="text-white">Website Quotation Tool</span>
           </h1>
 
           <p className="md:text-xl text-lg text-white max-w-[320px] md:max-w-3xl mx-auto">Know your website cost in under 2 minutes with no commitment — transparent, automatic, and secure</p>
           <div className="flex flex-wrap max-md:max-w-[320px] items-center justify-center mt-5 gap-2 mx-auto md:gap-4">
   <div className="inline-flex items-center gap-2 rounded-full border border-gray-800 bg-[#0b0b0b] px-4 py-2">
-    <Lock size={16} className="text-red-600" />
+    <Lock size={16} className="text-[#ff1f00]" />
     <span className="text-sm font-medium text-white">SSL Encrypted</span>
   </div>
 
   <div className="inline-flex items-center gap-2 rounded-full border border-gray-800 bg-[#0b0b0b] px-4 py-2">
-    <Globe2 size={16} className="text-red-600" />
+    <Globe2 size={16} className="text-[#ff1f00]" />
     <span className="text-sm font-medium text-white">GDPR Compliant</span>
   </div>
 
   <div className="inline-flex items-center gap-2 rounded-full border border-gray-800 bg-[#0b0b0b] px-4 py-2">
-    <ShieldCheck size={16} className="text-red-600" />
+    <ShieldCheck size={16} className="text-[#ff1f00]" />
     <span className="text-sm font-medium text-white">Trusted Worldwide</span>
   </div>
 </div>
@@ -1350,7 +1350,7 @@ const QuotationTool: React.FC = () => {
           {/* number circle */}
           <div
             className={`sm:w-10 h-7 sm:h-10 w-7 rounded-full flex items-center justify-center text-sm font-semibold
-              ${currentStep === s ? "bg-red-700 text-white shadow-[0_0_20px_rgba(185,28,28,0.3)]" : "bg-[#2b2b2b] text-gray-300"}`}
+              ${currentStep === s ? "bg-[#ff1f00] text-white shadow-[0_0_20px_rgba(185,28,28,0.3)]" : "bg-[#2b2b2b] text-gray-300"}`}
           >
             {s}
           </div>
@@ -1358,7 +1358,7 @@ const QuotationTool: React.FC = () => {
           {/* label inline (right of the number) */}
           <span
             className={`md:ml-3 ml-1 max-sm:text-[13px] sm:text-sm font-medium ${
-              currentStep === s ? "text-red-700" : "text-red-700"
+              currentStep === s ? "text-[#ff1f00]" : "text-[#ff1f00]"
             }`}
           >
             {["Basic Info", "Website Details", "Final Details"][s - 1]}
@@ -1393,7 +1393,7 @@ const QuotationTool: React.FC = () => {
                ring-0 focus:ring-0 focus:ring-offset-0
                focus:border-red-700"
  disabled={isLoadingStep1} />
-                  {errors.fullName && <p className="text-red-600 text-sm mt-1">{errors.fullName}</p>}
+                  {errors.fullName && <p className="text-[#ff1f00] text-sm mt-1">{errors.fullName}</p>}
                 </div>
 
                 <div>
@@ -1413,7 +1413,7 @@ const QuotationTool: React.FC = () => {
                   <option value="">Select your country</option>
                   {COUNTRY_OPTIONS.map((c) => <option key={c} value={c}>{c}</option>)}
                 </select>
-                {errors.country && <p className="text-red-600 text-sm mt-1">{errors.country}</p>}
+                {errors.country && <p className="text-[#ff1f00] text-sm mt-1">{errors.country}</p>}
                 <p className="text-xs text-gray-300 mt-1">Prices are calculated internally in MUR; your final total will be shown in your currency.</p>
                 <div className="mt-2"><p className="text-sm text-white">Converted total: <span className="font-medium">{convertedPrice.currency} {Math.round(convertedPrice.amount).toLocaleString()}</span></p></div>
               </div>
@@ -1572,7 +1572,7 @@ div:has(input[type="radio"]:checked) { border-color: #b91c1c !important; }
                     onCountryChange={handleCountryChange}
                     
   />
-                  {errors.whatsappNumber && <p className="text-red-600 text-sm mt-1">{errors.whatsappNumber}</p>}
+                  {errors.whatsappNumber && <p className="text-[#ff1f00] text-sm mt-1">{errors.whatsappNumber}</p>}
                 </div>
 
                 <div>
@@ -1583,13 +1583,13 @@ div:has(input[type="radio"]:checked) { border-color: #b91c1c !important; }
                ring-0 focus:ring-0 focus:ring-offset-0
                focus:border-red-700"
  disabled={isLoadingStep1} />
-                  {errors.email && <p className="text-red-600 text-sm mt-1">{errors.email}</p>}
+                  {errors.email && <p className="text-[#ff1f00] text-sm mt-1">{errors.email}</p>}
                 </div>
               </div>
             
 
 <p className="flex items-center text-sm text-[#e5e7eb]">
-  <Shield size={16} className="text-red-700 mr-2" />
+  <Shield size={16} className="text-[#ff1f00] mr-2" />
   Your data is secure and GDPR protected
 </p>
 
@@ -1599,7 +1599,7 @@ div:has(input[type="radio"]:checked) { border-color: #b91c1c !important; }
           {/* Step 2 */}
           {currentStep === 2 && (
             <div className="space-y-8">
-              <h2 className="text-2xl font-semibold text-red-700 mb-6">Website Details</h2>
+              <h2 className="text-2xl font-semibold text-[#ff1f00] mb-6">Website Details</h2>
 <style>{`
   /* Make the label text next to the radio white, without touching your JSX/classes */
   label input[type="radio"] + .text-gray-700 {
@@ -1629,7 +1629,7 @@ div:has(input[type="radio"]:checked) { border-color: #b91c1c !important; }
       </label>
     ))}
   </div>
-  {errors.websiteType && <p className="text-red-600 text-sm mt-1">{errors.websiteType}</p>}
+  {errors.websiteType && <p className="text-[#ff1f00] text-sm mt-1">{errors.websiteType}</p>}
 </div>
 
 
@@ -1650,7 +1650,7 @@ div:has(input[type="radio"]:checked) { border-color: #b91c1c !important; }
                         </label>
                       ))}
                     </div>
-                    {errors.products && <p className="text-red-600 text-sm mt-1">{errors.products}</p>}
+                    {errors.products && <p className="text-[#ff1f00] text-sm mt-1">{errors.products}</p>}
                   </div>
 
                   {formData.products && (
@@ -1667,7 +1667,7 @@ div:has(input[type="radio"]:checked) { border-color: #b91c1c !important; }
                           </label>
                         ))}
                       </div>
-                      {errors.insertProducts && <p className="text-red-600 text-sm mt-1">{errors.insertProducts}</p>}
+                      {errors.insertProducts && <p className="text-[#ff1f00] text-sm mt-1">{errors.insertProducts}</p>}
                     </div>
                   )}
                 </>
@@ -1689,7 +1689,7 @@ div:has(input[type="radio"]:checked) { border-color: #b91c1c !important; }
                       </label>
                     ))}
                   </div>
-                  {errors.pages && <p className="text-red-600 text-sm mt-1">{errors.pages}</p>}
+                  {errors.pages && <p className="text-[#ff1f00] text-sm mt-1">{errors.pages}</p>}
                 </div>
               )}
 
@@ -1708,7 +1708,7 @@ div:has(input[type="radio"]:checked) { border-color: #b91c1c !important; }
                     </label>
                   ))}
                 </div>
-                {errors.designStyle && <p className="text-red-600 text-sm mt-1">{errors.designStyle}</p>}
+                {errors.designStyle && <p className="text-[#ff1f00] text-sm mt-1">{errors.designStyle}</p>}
               </div>
 
               <div>
@@ -1769,7 +1769,7 @@ div:has(input[type="radio"]:checked) { border-color: #b91c1c !important; }
                     </label>
                   ))}
                 </div>
-                {errors.timeline && <p className="text-red-600 text-sm mt-1">{errors.timeline}</p>}
+                {errors.timeline && <p className="text-[#ff1f00] text-sm mt-1">{errors.timeline}</p>}
               </div>
 
               <div>
@@ -1785,7 +1785,7 @@ div:has(input[type="radio"]:checked) { border-color: #b91c1c !important; }
                     </label>
                   ))}
                 </div>
-                {errors.hosting && <p className="text-red-600 text-sm mt-1">{errors.hosting}</p>}
+                {errors.hosting && <p className="text-[#ff1f00] text-sm mt-1">{errors.hosting}</p>}
               </div>
 
               <div>
@@ -1801,7 +1801,7 @@ div:has(input[type="radio"]:checked) { border-color: #b91c1c !important; }
                     </label>
                   ))}
                 </div>
-                {errors.domain && <p className="text-red-600 text-sm mt-1">{errors.domain}</p>}
+                {errors.domain && <p className="text-[#ff1f00] text-sm mt-1">{errors.domain}</p>}
               </div>
 
               <div>
@@ -1814,8 +1814,8 @@ div:has(input[type="radio"]:checked) { border-color: #b91c1c !important; }
           {/* Live Price Display */}
           {pricing.totalPrice > 0 && (
             <div className="mt-8 p-6 \ rounded-lg bg-[#0b0b0b] border border-[#1f2937]">
-              <h3 className="text-lg font-semibold text-red-700 mb-4">Live Price Calculation</h3>
-              <div className="space-y-2 text-sm text-red-700">
+              <h3 className="text-lg font-semibold text-[#ff1f00] mb-4">Live Price Calculation</h3>
+              <div className="space-y-2 text-sm text-[#ff1f00]">
                 {(() => {
                   const convertPrice = (price: number) => {
                     if (!formData.country) return price;
@@ -1881,7 +1881,7 @@ div:has(input[type="radio"]:checked) { border-color: #b91c1c !important; }
                         </div>
                       )}
                       <hr className="border-red-700" />
-                      <div className="flex justify-between text-lg font-bold text-red-700">
+                      <div className="flex justify-between text-lg font-bold text-[#ff1f00]">
                         <span>Total Price:</span>
                         <span>{convertedPrice.currency} {Math.round(convertedPrice.amount).toLocaleString()}</span>
                       </div>
@@ -1899,7 +1899,7 @@ div:has(input[type="radio"]:checked) { border-color: #b91c1c !important; }
             </button>
 
             {currentStep < 3 ? (
-              <button onClick={currentStep === 1 ? handleNextFromStep1 : nextStep} disabled={isLoadingStep1} className="flex items-center px-6 py-3 bg-red-700 text-white rounded-lg hover:bg-[#e1291c] disabled:bg-gray-400">
+              <button onClick={currentStep === 1 ? handleNextFromStep1 : nextStep} disabled={isLoadingStep1} className="flex items-center px-6 py-3 bg-[#ff1f00] text-white rounded-lg hover:bg-[#e1291c] disabled:bg-gray-400">
                 {isLoadingStep1 ? (
                   <>
                     <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2" />
@@ -1912,7 +1912,7 @@ div:has(input[type="radio"]:checked) { border-color: #b91c1c !important; }
                 )}
               </button>
             ) : (
-              <button onClick={handleSubmit} disabled={isSubmitting} className="flex items-center px-8 py-3 bg-red-700 text-white rounded-lg hover:bg-[#e1291c] disabled:bg-gray-400">
+              <button onClick={handleSubmit} disabled={isSubmitting} className="flex items-center px-8 py-3 bg-[#ff1f00] text-white rounded-lg hover:bg-[#e1291c] disabled:bg-gray-400">
                 {isSubmitting ? (
                   <>
                     <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2" />
@@ -1927,11 +1927,11 @@ div:has(input[type="radio"]:checked) { border-color: #b91c1c !important; }
         </div>
        <p className="text-center text-sm mt-5 text-[#e5e7eb]">
   By continuing, you agree to our{" "}
-  <a href="/terms" className="text-red-700 hover:underline">
+  <a href="/terms" className="text-[#ff1f00] hover:underline">
     Terms of Service
   </a>{" "}
   and{" "}
-  <a href="/privacy" className="text-red-700 hover:underline">
+  <a href="/privacy" className="text-[#ff1f00] hover:underline">
     Privacy Policy
   </a>
 </p>

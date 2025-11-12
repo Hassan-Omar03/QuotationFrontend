@@ -56,7 +56,7 @@ function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [active, setActive] = useState("Home");
 
-  const menuItems = ["Home", "About Us", "Services", "Blog", "Contact Us"];
+  const menuItems = ["Home", "About", "Services", "Blog", "Contact Us"];
 
   // typed navigationItems so map callbacks are typed (no implicit any)
   const navigationItems: { name: string; href: string }[] = menuItems.map((name) => ({
@@ -186,13 +186,13 @@ function App() {
     rel="noopener noreferrer"
     className="inline-block"
   >
-    <button className="text-red-500 border border-red-500 px-4 py-2 sm:px-6 sm:py-2 rounded-full text-xs sm:text-sm font-medium transition-all whitespace-nowrap hover:bg-red-500 hover:text-white">
-      Instant Quotation
-    </button>
+     <button className="text-[#ff1f00] border border-red-500 px-4 py-2 sm:px-6 sm:py-2 rounded-full text-xs sm:text-sm font-medium transition-all whitespace-nowrap hover:bg-red-500 hover:text-white">
+                Instant Quotation
+              </button>
   </a>
 
   <button className="bg-white rounded-full p-1 sm:p-2 flex items-center space-x-1">
-    <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-red-500 flex items-center justify-center">
+    <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-[#ff1f00] flex items-center justify-center">
       <span className="text-white text-xs font-bold">+</span>
     </div>
     <span className="text-black text-xs sm:text-sm font-medium px-1 sm:px-2">FR</span>
@@ -361,7 +361,7 @@ function App() {
               </h3>
               <div className="space-y-2">
                 <a href="#" className="block text-white text-sm">Home</a>
-                <a href="#" className="block text-white text-sm">About Us</a>
+                <a href="#" className="block text-white text-sm">About </a>
                 <a href="/" className="block text-white text-sm">Services</a>
                 <a href="#" className="block text-white text-sm">Blog</a>
               </div>
@@ -449,7 +449,7 @@ function App() {
             <h3 className="text-[#ff1f00] text-sm sm:text-base lg:text-lg uppercase">QUICK LINKS</h3>
             <div className="space-y-1 sm:space-y-2 lg:space-y-3 mt-3 sm:mt-4">
               <a href="#" className="block text-white hover:text-white text-xs sm:text-sm lg:text-base">Home</a>
-              <a href="#" className="block text-white hover:text-white text-xs sm:text-sm lg:text-base">About Us</a>
+              <a href="#" className="block text-white hover:text-white text-xs sm:text-sm lg:text-base">About</a>
               <a href="/" className="block text-white hover:text-white text-xs sm:text-sm lg:text-base">Services</a>
               <a href="#" className="block text-white hover:text-white text-xs sm:text-sm lg:text-base">Blog</a>
             </div>
