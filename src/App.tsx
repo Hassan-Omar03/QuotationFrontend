@@ -150,11 +150,13 @@ function App() {
     <div className="mx-auto text-white max-w-[1232px] w-[90%] flex items-center justify-between">
       {/* Logo */}
       <div>
-        <img
-          src={logo}
-          className="w-20 sm:w-24 md:w-28 lg:w-[110px]"
-          alt="asd"
-        />
+       <a href="/" className="cursor-pointer">
+  <img
+    src={logo}
+    className="w-20 sm:w-24 md:w-28 lg:w-[110px]"
+    alt="logo"
+  />
+</a>
       </div>
 
       {/* Desktop Menu */}
@@ -261,7 +263,9 @@ function App() {
                 >
                   <div className="flex flex-col min-h-full pb-6" style={{ position: "relative" }}>
                     <div className="flex items-center justify-between pl-4 pr-4">
-                      <img src={logo} className="w-[5rem] object-contain" alt="Logo" />
+                      <a href="/" onClick={() => setMenuOpen(false)}>
+  <img src={logo} className="w-[5rem] object-contain" alt="Logo" />
+</a>
 
                       <motion.button
                         onClick={() => setMenuOpen(false)}
@@ -477,7 +481,9 @@ function App() {
 
           {/* Logo + Info */}
           <div className="text-center mb-8">
-            <img src={logo} className="w-48 mx-auto mb-4" alt="BIM Logo" />
+            <a href="/" className="cursor-pointer">
+  <img src={logo} className="w-48 mx-auto mb-4" alt="BIM Logo" />
+</a>
             <p className="text-white text-sm mb-1">Copyright © 2025 BIM. All Rights Reserved.</p>
             <p className="text-white text-sm">Mauritius & Luxembourg</p>
           </div>
@@ -494,7 +500,9 @@ function App() {
         <div className="hidden sm:grid sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 lg:gap-12">
           <div className="text-left">
             <div className="text-[#ff1f00] font-black text-3xl sm:text-4xl lg:text-5xl xl:text-6xl tracking-tight">
-              <img src={logo} className="w-48 sm:w-64 lg:w-80 xl:w-[500px]" alt="BIM Logo" />
+              <a href="/" className="cursor-pointer">
+  <img src={logo} className="w-48 sm:w-64 lg:w-80 xl:w-[500px]" alt="BIM Logo" />
+</a>
             </div>
             <p className="text-white text-xs sm:text-sm mt-3 sm:mt-4">Copyright © 2025 BIM. All Rights Reserved.</p>
             <p className="text-white text-xs sm:text-sm">Mauritius & Luxembourg</p>
