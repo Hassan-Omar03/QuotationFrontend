@@ -59,10 +59,13 @@ function App() {
   const menuItems = ["Home", "About", "Services", "Blog", "Contact Us"];
 
   // typed navigationItems so map callbacks are typed (no implicit any)
-  const navigationItems: { name: string; href: string }[] = menuItems.map((name) => ({
-    name,
-    href: "#",
-  }));
+  const navigationItems = [
+  { name: "Home", href: "https://www.bim.africa/" },
+  { name: "About", href: "https://www.bim.africa/About" },
+  { name: "Services", href: "https://www.bim.africa/service" },
+  { name: "Blog", href: "https://www.bim.africa/blog" },
+  { name: "Contact Us", href: "https://www.bim.africa/contactus" },
+];
 
  const handleWhatsAppClick = () => {
   const phoneNumber = "352661784276"; // Luxembourg number without '+'
@@ -90,46 +93,57 @@ function App() {
   </svg>
 </button>
       {/* Wave link CSS */}
-      <style>{`
-        .wave-link {
-          cursor: pointer;
-          font-size: 18px;
-          position: relative;
-          white-space: nowrap;
-          background: transparent;
-          border: 0;
-          overflow: hidden;
-          padding: 4px 0;
-        }
-        .wave-link:before {
-          content: '';
-          background: #FFF;
-          position: absolute;
-          width: 100%;
-          height: 1px;
-          top: 100%;
-          left: 0;
-          pointer-events: none;
-        }
-        .link__graphic {
-          position: absolute;
-          top: 0;
-          left: 0;
-          pointer-events: none;
-          fill: none;
-          stroke: #FFF;
-          stroke-width: 1px;
-        }
-        .link__graphic--slide {
-          top: -3px;
-          stroke-width: 2px;
-          transition: transform 0.7s;
-          transition-timing-function: cubic-bezier(0, 0.25, 0.5, 1);
-        }
-        .wave-link:hover .link__graphic--slide {
-          transform: translate3d(-66.6%, 0, 0);
-        }
-      `}</style>
+    <style>{`
+  .wave-link {
+    cursor: pointer;
+    font-size: 18px;
+    position: relative;
+    white-space: nowrap;
+    background: transparent;
+    border: 0;
+    overflow: hidden;
+    padding: 4px 0;
+  }
+
+  .wave-link:before {
+    content: '';
+    background: #FFF;
+    position: absolute;
+    width: 100%;
+    height: 1px;
+    top: 100%;
+    left: 0;
+    pointer-events: none;
+  }
+
+  .link__graphic {
+    position: absolute;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    fill: none;
+    stroke: #FFF;
+    stroke-width: 1px;
+  }
+
+  /* ⭐ Ultra-smooth + fast hover response wave animation */
+  .link__graphic--slide {
+    top: -3px;
+    stroke-width: 2px;
+
+    /* smoother, more fluid, instant start */
+    transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+
+    /* GPU acceleration */
+    will-change: transform;
+  }
+
+  .wave-link:hover .link__graphic--slide {
+    transform: translate3d(-66.6%, 0, 0);
+  }
+`}</style>
+
+
 
       <div className="bg-black/95 backdrop-blur-sm sticky top-0 z-50">
   <div className="bg-black w-full py-2">
@@ -149,27 +163,32 @@ function App() {
   className="hidden md:flex items-center space-x-6 lg:space-x-16 relative -ml-1"
   style={{ fontFamily: "Arial, Helvetica, sans-serif" }}
 >
-  {menuItems.map((item) => (
-    <div key={item} className="wave-link relative">
-      {/* Text with separate font size */}
-      <span className="text-white text-[16px]">{item}</span>
+  {navigationItems.map((item) => (
+  <a
+    key={item.name}
+    href={item.href}
+    target="_blank"
+    rel="noopener noreferrer"
+    className="wave-link relative text-white text-[16px]"
+  >
+    {item.name}
 
-      {/* Wave effect SVG */}
-      <svg
-        className="link__graphic link__graphic--slide"
-        width="300%"
-        height="100%"
-        viewBox="0 0 1200 60"
-        preserveAspectRatio="none"
-      >
-        <path
-          d="M0,56.5c0,0,298.666,0,399.333,0C448.336,56.5,513.994,46,597,46
-            c77.327,0,135,10.5,200.999,10.5c95.996,0,402.001,0,402.001,0"
-          fill="none"
-        />
-      </svg>
-    </div>
-  ))}
+    <svg
+      className="link__graphic link__graphic--slide"
+      width="300%"
+      height="100%"
+      viewBox="0 0 1200 60"
+      preserveAspectRatio="none"
+    >
+      <path
+        d="M0,56.5c0,0,298.666,0,399.333,0C448.336,56.5,513.994,46,597,46
+        c77.327,0,135,10.5,200.999,10.5c95.996,0,402.001,0,402.001,0"
+        fill="none"
+      />
+    </svg>
+  </a>
+))}
+
 </div>
 
 
@@ -360,10 +379,39 @@ function App() {
                 QUICK LINK
               </h3>
               <div className="space-y-2">
-                <a href="#" className="block text-white text-sm">Home</a>
-                <a href="#" className="block text-white text-sm">About </a>
-                <a href="/" className="block text-white text-sm">Services</a>
-                <a href="#" className="block text-white text-sm">Blog</a>
+                <a
+  href="https://www.bim.africa/"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="block text-white text-sm"
+>
+  Home
+</a>
+                <a
+  href="https://www.bim.africa/About"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="block text-white text-sm"
+>
+  About
+</a>
+
+                <a
+  href="https://www.bim.africa/service"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="block text-white text-sm"
+>
+  Services
+</a>
+               <a
+  href="https://www.bim.africa/blog"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="block text-white text-sm"
+>
+  Blog
+</a>
               </div>
             </div>
             <div>
@@ -371,7 +419,14 @@ function App() {
                 SUPPORT
               </h3>
               <div className="space-y-2">
-                <a href="/contactus" className="block text-white text-sm">Contact us</a>
+                <a
+  href="https://www.bim.africa/contactus"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="block text-white text-sm"
+>
+  Contact us
+</a>
                 <a href="#" className="block text-white text-sm">Privacy Policy</a>
                 <a href="#" className="block text-white text-sm">Terms of Service</a>
               </div>
@@ -448,17 +503,57 @@ function App() {
           <div className="text-left">
             <h3 className="text-[#ff1f00] text-sm sm:text-base lg:text-lg uppercase">QUICK LINKS</h3>
             <div className="space-y-1 sm:space-y-2 lg:space-y-3 mt-3 sm:mt-4">
-              <a href="#" className="block text-white hover:text-white text-xs sm:text-sm lg:text-base">Home</a>
-              <a href="#" className="block text-white hover:text-white text-xs sm:text-sm lg:text-base">About</a>
-              <a href="/" className="block text-white hover:text-white text-xs sm:text-sm lg:text-base">Services</a>
-              <a href="#" className="block text-white hover:text-white text-xs sm:text-sm lg:text-base">Blog</a>
+              <a
+  href="https://www.bim.africa/"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="block text-white hover:text-white text-xs sm:text-sm lg:text-base"
+>
+  Home
+</a>
+
+<a
+  href="https://www.bim.africa/About"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="block text-white hover:text-white text-xs sm:text-sm lg:text-base"
+>
+  About
+</a>
+
+<a
+  href="https://www.bim.africa/service"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="block text-white hover:text-white text-xs sm:text-sm lg:text-base"
+>
+  Services
+</a>
+
+<a
+  href="https://www.bim.africa/blog"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="block text-white hover:text-white text-xs sm:text-sm lg:text-base"
+>
+  Blog
+</a>
+
             </div>
           </div>
 
           <div className="text-left">
             <h3 className="text-[#ff1f00] text-sm sm:text-base lg:text-lg uppercase">SUPPORT</h3>
             <div className="space-y-1 sm:space-y-2 lg:space-y-3 mt-3 sm:mt-4">
-              <a href="/contactus" className="block text-white hover:text-white text-xs sm:text-sm lg:text-base">Contact Us</a>
+              <a
+  href="https://www.bim.africa/contactus"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="block text-white hover:text-white text-xs sm:text-sm lg:text-base"
+>
+  Contact Us
+</a>
+
               <a href="#" className="block text-white hover:text-white text-xs sm:text-sm lg:text-base">Privacy Policy</a>
               <a href="#" className="block text-white hover:text-white text-xs sm:text-sm lg:text-base">Terms of Service</a>
             </div>
