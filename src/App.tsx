@@ -83,7 +83,7 @@ function App() {
   {/* Essential Meta */}
   <meta charSet="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>BIM Africa – Web, AI & Branding Solutions</title>
+  <title>BIM Africa – Instant Website Design & Development Quotation Tool | Real Time Pricing</title>
 
   <meta
     name="description"
@@ -193,9 +193,7 @@ function App() {
   </script>
 
 </Helmet>
-<h1 className="sr-only">
-  BIM Africa – Elite Web, AI, Branding & Digital Product Development
-</h1>
+
 
 
     <button
