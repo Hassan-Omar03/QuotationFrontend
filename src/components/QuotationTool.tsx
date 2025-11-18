@@ -168,11 +168,11 @@ interface FormData {
   products: "1-10" | "11-50" | "51-200" | "200-500" | "";
   insertProducts: "insert-all" | "provide-training" | "";
   pages: "1-3" | "4-7" | "8-15" | "15+" | "";
-  designStyle: "template" | "semi-custom" | "fully-custom" | "not-sure" | "";
+  designStyle: "Optimized UI Design" | "Enhanced UI/UX Experience" | "Fully Engineered Custom UI/UX" | "Unsure - Guide Me" | "";
   features: FeatureKey[];
   timeline: "6-8-weeks" | "3-5-weeks" | "2-4-weeks" | "<2-weeks" | "";
-  hosting: "bim africa to provide" | "client" | "";
-  domain: "bim africa to provide" | "client" | "";
+  hosting: "Hosting by BIM Africa" | "Hosting Managed by Client" | "";
+  domain: "Domain Managed by BIM Africa (Standard Domain)" | "Domain Managed by Cliend -> No Change" | "";
   whatsappNumber: string;
   email: string;
   comments: string;
@@ -681,7 +681,7 @@ const QuotationTool: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    let timer: NodeJS.Timeout;
+    let timer: ReturnType<typeof setTimeout>;
     if (isLoadingStep1 && countdown > 0) {
       timer = setTimeout(() => setCountdown((p) => p - 1), 1000);
     } else if (!isLoadingStep1) {
@@ -692,9 +692,9 @@ const QuotationTool: React.FC = () => {
 
   /* Pricing maps */
   const basePriceMap: Record<FormData["websiteType"], number> = {
-    landing: 12000,
-    corporate: 12000,
-    ecommerce: 15000,
+    landing: 20000,
+    corporate: 35000,
+    ecommerce: 45000,
     "": 0,
   };
   const productsPriceMap: Record<FormData["products"], number> = {
@@ -706,7 +706,7 @@ const QuotationTool: React.FC = () => {
   };
   const insertProductsPriceMap: Record<FormData["insertProducts"], number> = {
     "insert-all": 3000,
-    "provide-training": 1000,
+    "provide-training": 4000,
     "": 0,
   };
   const pagesPriceMap: Record<FormData["pages"], number> = {
@@ -716,38 +716,39 @@ const QuotationTool: React.FC = () => {
     "15+": 20000,
     "": 0,
   };
-  const designPriceMap: Record<FormData["designStyle"], number> = {
-    template: 2000,
-    "semi-custom": 4000,
-    "fully-custom": 7000,
-    "not-sure": 3000,
-    "": 0,
-  };
+  const designPriceMap: Record<string, number> = {
+  "Optimized UI Design": 5000,
+  "Enhanced UI/UX Experience": 10000,
+  "Fully Engineered Custom UI/UX": 20000,
+  "Unsure — Guide Me": 5000,
+  "": 0,
+};
+
   const featurePrices: Record<FeatureKey, number> = {
-    "contact-form": 2000,
-    "whatsapp-chat": 1500,
-    "messenger-chat": 1500,
-    blog: 1000,
-    "payment-gateway": 10000,
-    "multi-language": 6000,
-    booking: 8000,
-    gallery: 1000,
-    newsletter: 1500,
+    "contact-form": 3000,
+    "whatsapp-chat": 2500,
+    "messenger-chat": 3000,
+    blog: 7000,
+    "payment-gateway": 15000,
+    "multi-language": 10000,
+    booking: 12000,
+    gallery: 4000,
+    newsletter: 3000,
   };
   const timelinePriceMap: Record<FormData["timeline"], number> = {
     "6-8-weeks": 0,
-    "3-5-weeks": 1000,
-    "2-4-weeks": 2000,
-    "<2-weeks": 3000,
+    "3-5-weeks": 4000,
+    "2-4-weeks": 8000,
+    "<2-weeks": 15000,
     "": 0,
   };
-  const hostingPriceMap: Record<FormData["hosting"], number> = {
-    "bim africa to provide": 2000,
-    client: 500,
+  const hostingPriceMap: Record<string, number> = {
+    "Hosting by BIM Africa": 10000,
+    client: 0,
     "": 0,
   };
-  const domainPriceMap: Record<FormData["domain"], number> = {
-    "bim africa to provide": 1000,
+  const domainPriceMap: Record<string, number> = {
+    "Domain Managed by BIM Africa (Standard Domain)": 2000,
     client: 0,
     "": 0,
   };
@@ -1620,7 +1621,7 @@ div:has(input[type="radio"]:checked) { border-color: #b91c1c !important; }
   <div className="space-y-3">
     {[
       { value: "landing", label: "Landing Page (One Pager)" },
-      { value: "corporate", label: "Corporate Website" },
+      { value: "corporate", label: "Business / Corporate Website" },
       { value: "ecommerce", label: "E-Commerce Website" },
     ].map((o) => (
       <label key={o.value} className="flex items-center p-4 focus:ring-2 focus:ring-red-700 focus:border-red-700   bg-[#0b0b0b] border border-[#1f2937] text-[#e5e7eb] rounded-lg">
@@ -1655,11 +1656,11 @@ div:has(input[type="radio"]:checked) { border-color: #b91c1c !important; }
 
                   {formData.products && (
                     <div>
-                      <label className="block text-sm font-medium text-white mb-4">Insert products or training?</label>
+                      <label className="block text-sm font-medium text-white mb-4">Product Upload & Management</label>
                       <div className="space-y-3">
                         {[
-                          { value: "insert-all", label: `Insert all → + MUR ${getInsertAllPrice().toLocaleString()}` },
-                          { value: "provide-training", label: "Provide training → + MUR 1,000" },
+                          { value: "insert-all", label: `We Handle Product Uploads → + MUR ${getInsertAllPrice().toLocaleString()}` },
+                          { value: "provide-training", label: "You Manage Uploads (With Training) → + MUR 4,000" },
                         ].map((o) => (
                           <label key={o.value} className="flex items-center p-3 focus:ring-2 focus:ring-red-700 focus:border-red-700   bg-[#0b0b0b] border border-[#1f2937] text-[#e5e7eb] rounded-lg">
                             <input type="radio" name="insertProducts" value={o.value} checked={formData.insertProducts === (o.value as any)} onChange={(e) => handleInput("insertProducts", e.target.value as any)} className="w-4 h-4 text-blue-600 border-gray-300" />
@@ -1697,10 +1698,10 @@ div:has(input[type="radio"]:checked) { border-color: #b91c1c !important; }
                 <label className="block text-sm font-medium text-white-700 mb-4">Design Style *</label>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                   {[
-                    { value: "template", label: "Template" },
-                    { value: "semi-custom", label: "Semi-custom" },
-                    { value: "fully-custom", label: "Fully custom" },
-                    { value: "not-sure", label: "Not sure" },
+                    { value: "Optimized UI Design", label: "Optimized UI Design" },
+                    { value: "Enhanced UI/UX Experience", label: "Enhanced UI/UX Experience" },
+                    { value: "Fully Engineered Custom UI/UX", label: "Fully Engineered Custom UI/UX" },
+                    { value: "Unsure — Guide Me", label: "Unsure — Guide Me" },
                   ].map((o) => (
                     <label key={o.value} className="flex items-center p-3 focus:ring-2 focus:ring-red-700 focus:border-red-700   bg-[#0b0b0b] border border-[#1f2937] text-[#e5e7eb] rounded-lg">
                       <input type="radio" name="designStyle" value={o.value} checked={formData.designStyle === (o.value as any)} onChange={(e) => handleInput("designStyle", e.target.value as any)} className="w-4 h-4 text-blue-600 border-gray-300" />
@@ -1758,10 +1759,10 @@ div:has(input[type="radio"]:checked) { border-color: #b91c1c !important; }
                 <label className="block text-sm font-medium text-white mb-4">Timeline</label>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                   {[
-                    { value: "6-8-weeks", label: "6-8 weeks → No change" },
+                    { value: "6-8-weeks", label: "6-8 weeks (Normal Delivery)" },
                     { value: "3-5-weeks", label: "3-5 weeks" },
                     { value: "2-4-weeks", label: "2-4 weeks" },
-                    { value: "<2-weeks", label: "<2 weeks" },
+                    { value: "<2-weeks", label: "<2 weeks (Fastest Delivery)" },
                   ].map((o) => (
                     <label key={o.value} className="flex items-center p-3 focus:ring-2 focus:ring-red-700 focus:border-red-700   bg-[#0b0b0b] border border-[#1f2937] text-[#e5e7eb] rounded-lg">
                       <input type="radio" name="timeline" value={o.value} checked={formData.timeline === (o.value as any)} onChange={(e) => handleInput("timeline", e.target.value as any)} className="w-4 h-4 text-blue-600 border-gray-300" />
@@ -1776,8 +1777,8 @@ div:has(input[type="radio"]:checked) { border-color: #b91c1c !important; }
                 <label className="block text-sm font-medium text-white mb-4">Hosting</label>
                 <div className="space-y-3">
                   {[
-                    { value: "bim africa to provide", label: "BIM Africa to provide" },
-                    { value: "client", label: "Client to provide" },
+                    { value: "Hosting by BIM Africa", label: "Hosting by BIM Africa" },
+                    { value: "Hosting Managed by Client", label: "Hosting Managed by Client" },
                   ].map((o) => (
                     <label key={o.value} className="flex items-center p-3  focus:ring-2 focus:ring-red-700 focus:border-red-700   bg-[#0b0b0b] border border-[#1f2937] text-[#e5e7eb] rounded-lg">
                       <input type="radio" name="hosting" value={o.value} checked={formData.hosting === (o.value as any)} onChange={(e) => handleInput("hosting", e.target.value as any)} className="w-4 h-4 text-blue-600 border-gray-300" />
@@ -1792,8 +1793,8 @@ div:has(input[type="radio"]:checked) { border-color: #b91c1c !important; }
                 <label className="block text-sm font-medium text-white mb-4">Domain</label>
                 <div className="space-y-3">
                   {[
-                    { value: "bim africa to provide", label: "BIM Africa purchases (non-premium)" },
-                    { value: "client", label: "Client purchases → No change" },
+                    { value: "bim africa to provide", label: "Domain Managed by BIM Africa (Standard Domain)" },
+                    { value: "client", label: "Domain Managed by Client → No change" },
                   ].map((o) => (
                     <label key={o.value} className="flex items-center p-3 focus:ring-2 focus:ring-red-700 focus:border-red-700   bg-[#0b0b0b] border border-[#1f2937] text-[#e5e7eb] rounded-lg">
                       <input type="radio" name="domain" value={o.value} checked={formData.domain === (o.value as any)} onChange={(e) => handleInput("domain", e.target.value as any)} className="w-4 h-4 text-blue-600 border-gray-300" />

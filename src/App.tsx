@@ -61,7 +61,7 @@ function App() {
   // typed navigationItems so map callbacks are typed (no implicit any)
   const navigationItems = [
   { name: "Home", href: "https://www.bim.africa/" },
-  { name: "About", href: "https://www.bim.africa/About" },
+  { name: "About Us", href: "https://www.bim.africa/About" },
   { name: "Services", href: "https://www.bim.africa/service" },
   { name: "Blog", href: "https://www.bim.africa/blog" },
   { name: "Contact Us", href: "https://www.bim.africa/contactus" },
@@ -96,7 +96,7 @@ function App() {
     <style>{`
   .wave-link {
     cursor: pointer;
-    font-size: 18px;
+    font-size: 16px;
     position: relative;
     white-space: nowrap;
     background: transparent;
@@ -171,7 +171,7 @@ function App() {
     href={item.href}
     target="_blank"
     rel="noopener noreferrer"
-    className="wave-link relative text-white text-[16px]"
+    className="wave-link relative text-white text-[12px]"
   >
     {item.name}
 
@@ -397,7 +397,7 @@ function App() {
   rel="noopener noreferrer"
   className="block text-white text-sm"
 >
-  About
+  About Us
 </a>
 
                 <a
@@ -526,7 +526,7 @@ function App() {
   rel="noopener noreferrer"
   className="block text-white hover:text-white text-xs sm:text-sm lg:text-base"
 >
-  About
+  About Us
 </a>
 
 <a
