@@ -6,37 +6,8 @@ import selected from "../Assests/selected.png";
 import nonselected from "../Assests/nonselected.png";
 import header from "../Assests/HEADER.png";
 /* -----------------------
-   Types & Constant
-
+   Types & Constants
    ----------------------- */
-
-
-   // -----------------------------
-// reCAPTCHA v3 function
-const RECAPTCHA_SITE_KEY = "6LcPmRgsAAAAAK2lz2Pf-iR5l-yV7x98mKR3GMFj";
-
-const getRecaptchaToken = (action = "basic_info"): Promise<string | null> => {
-  return new Promise((resolve) => {
-    if (!(window as any).grecaptcha) {
-      console.error("⚠️ grecaptcha not loaded");
-      return resolve(null);
-    }
-
-    (window as any).grecaptcha.ready(() => {
-      (window as any).grecaptcha
-        .execute(RECAPTCHA_SITE_KEY, { action })
-        .then((token: string) => {
-          console.log("🔥 reCAPTCHA token:", token);
-          resolve(token || null);
-        })
-        .catch((err: any) => {
-          console.error("❌ grecaptcha.execute error:", err);
-          resolve(null);
-        });
-    });
-  });
-};
-
 
 declare global {
   interface Window {
@@ -225,77 +196,6 @@ interface ConvertedPrice {
   currency: string;
 }
 
-// Micro-event triggers start here - step 1
-
-// 1. DYNAMIC TRACKING FUNCTIONS (Only one definition needed, place at the top)
-
-const trackFieldInteraction = (fieldName, stepName) => { 
-  if (typeof window.dataLayer !== 'undefined') {
-    window.dataLayer.push({
-      event: 'field_interaction',
-      form_name: 'website_quotation',
-      form_step: stepName, // Dynamic
-      field_name: fieldName
-    });
-    console.log(`GTM Event: field_interaction for ${fieldName} on ${stepName} pushed.`);
-  }
-};
-
-const trackStepCompletion = (stepName, featureData) => { 
-  const dataLayerObject = {
-    event: 'form_step_complete',
-    form_name: 'website_quotation',
-    form_step: stepName, // Dynamic
-  };
-
-  if (featureData) {
-      dataLayerObject.selected_features = featureData;
-  }
-  
-  if (typeof window.dataLayer !== 'undefined') {
-    window.dataLayer.push(dataLayerObject);
-    console.log(`GTM Event: form_step_complete for ${stepName} pushed.`);
-  }
-};
-
-
-// 2. STEP HANDLERS (Now with clean URLs and tracking)
-
-
-const handleNextFromStep1 = async () => {
-
-  const isValid = validateStep1(formData); 
-
-  if (isValid) {
-
-    // Calls the dynamic function: trackStepCompletion('step_1')
-
-    trackStepCompletion('step_1'); 
-
-    nextStep(); 
-
-  }
-
-};
-
-// Ensure this function exists in your JS file:
-const handleNextFromStep3 = async () => {
-    // Replace with your actual validation function for Step 3
-    const isValid = validateStep3(formData); 
-    
-    if (isValid) {
-        // 1. Step Completion Tracking
-        trackStepCompletion('step_3'); 
-        
-        // 2. Final Submission (Triggers API call and conversion tracking)
-        handleSubmit(); 
-    } else {
-        // Validation failed, errors displayed (NO TRACKING)
-    }
-};
-
-// Micro-event triggers ends here - step 3
-
 // GA helpers
 const initGoogleAnalytics = (): void => {
   try {
@@ -357,7 +257,6 @@ const PhoneInputComponent: React.FC<PhoneInputProps> = ({
   disabled = false,
   placeholder = "Enter phone number",
   onCountryChange,
-   onBlur,
 }) => {
   const [countries, setCountries] = useState<CountryData[]>([]);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -655,7 +554,6 @@ const PhoneInputComponent: React.FC<PhoneInputProps> = ({
           onChange={handlePhoneChange}
           onPaste={handlePaste}
           inputMode="tel"
-           onBlur={onBlur}
           onKeyDown={(e) => {
             // allow navigation keys, backspace, delete, arrows, tab
             const allowedKeys = [
@@ -734,62 +632,12 @@ const PhoneInputComponent: React.FC<PhoneInputProps> = ({
    ----------------------- */
 
 const QuotationTool: React.FC = () => {
- const [currentStep, setCurrentStep] = useState<number>(1);
-const [showQuote, setShowQuote] = useState(false);
-const [isSubmitting, setIsSubmitting] = useState(false);
-const [isLoadingStep1, setIsLoadingStep1] = useState(false);
-const [countdown, setCountdown] = useState(0);
-const [selectedPhoneCountry, setSelectedPhoneCountry] = useState("mu"); // iso2 code
-
-
-/* --------------------------
-   URL SYNC WITH HISTORY API
---------------------------- */
-
-// Read URL on first load and set the correct step
-useEffect(() => {
-  if (typeof window !== "undefined") {
-    const match = window.location.pathname.match(/step-(\d+)/);
-    if (match) {
-      const stepFromUrl = Number(match[1]);
-      if ([1, 2, 3].includes(stepFromUrl)) {
-        setCurrentStep(stepFromUrl);
-      }
-    }
-  }
-
-  // Handle browser Back/Forward buttons
-  const onPop = () => {
-    const match = window.location.pathname.match(/step-(\d+)/);
-    if (match) {
-      const stepFromUrl = Number(match[1]);
-      if ([1, 2, 3].includes(stepFromUrl)) {
-        setCurrentStep(stepFromUrl);
-      }
-    } else {
-      setCurrentStep(1);
-    }
-  };
-
-  window.addEventListener("popstate", onPop);
-  return () => window.removeEventListener("popstate", onPop);
-}, []);
-
-// Update URL whenever currentStep changes
-useEffect(() => {
-  if (typeof window === "undefined") return;
-
-  const base = window.location.pathname
-    .replace(/\/step-\d+$/, "")
-    .replace(/\/$/, "");
-
-  const newPath =
-    currentStep === 1
-      ? (base || "/")
-      : `${base}/step-${currentStep}`;
-
-  window.history.pushState(null, "", newPath);
-}, [currentStep]);
+  const [currentStep, setCurrentStep] = useState<number>(1);
+  const [showQuote, setShowQuote] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isLoadingStep1, setIsLoadingStep1] = useState(false);
+  const [countdown, setCountdown] = useState(0);
+  const [selectedPhoneCountry, setSelectedPhoneCountry] = useState("mu"); // iso2 code
 
   const [formData, setFormData] = useState<FormData>({
     fullName: "",
@@ -1140,142 +988,88 @@ useEffect(() => {
     return true;
   };
 
-
-// 🔥 FIX 2: Inject Step 2 GA4 Tracking directly into nextStep()
-const nextStep = () => {
-  // 1. Validate current step
-  if (!validateStep(currentStep)) return;
-
-  // 2. GA4 Tracking
-  if (currentStep === 2) {
-    const featuresString = formData.features.join('|');
-    trackStepCompletion('step_2', featuresString);
-  } else if (currentStep === 3) {
-    trackStepCompletion('step_3');
-  }
-
-  // 3. Move to next step
-  setCurrentStep((s) => Math.min(3, s + 1));
-
-  // 4. Old tracking event (optional)
-  trackEvent("step_completed", "QuotationTool", `step_${currentStep}_completed`);
-};
-       
+  const nextStep = () => {
+    if (validateStep(currentStep)) {
+      setCurrentStep((s) => Math.min(3, s + 1));
+      trackEvent("step_completed", "QuotationTool", `step_${currentStep}_completed`);
+    }
+  };
 
   const prevStep = () => {
-  setCurrentStep((s) => Math.max(1, s - 1));
-  trackEvent("step_back", "QuotationTool", `back_to_step_${Math.max(1, currentStep - 1)}`);
-};
+    setCurrentStep((s) => Math.max(1, s - 1));
+    trackEvent("step_back", "QuotationTool", `back_to_step_${Math.max(1, currentStep - 1)}`);
+  };
 
   /* Save basic info to server */
   const isCountrySupported = (country?: string | null) => {
     return !!country && COUNTRY_OPTIONS.includes(country as CountryKey);
   };
 
-const saveBasicToServer = async (): Promise<string | null> => {
-  if (!isCountrySupported(formData.country)) {
-    window.alert(
-      "Selected country is not supported for API saving. The form will continue but data will not be saved remotely."
-    );
-    return null;
-  }
-
-  // ----------------------------------------------------
-  // 🔥 1) Generate reCAPTCHA v3 token for STEP 1
-  // ----------------------------------------------------
-  let recaptchaToken: string | null = null;
-  try {
-    recaptchaToken = await getRecaptchaToken("basic_info");
-    if (!recaptchaToken) {
-      console.warn("⚠️ reCAPTCHA token missing. Continuing without token.");
-    }
-  } catch (err) {
-    console.error("reCAPTCHA token error:", err);
-  }
-
-  // ----------------------------------------------------
-  // 🔥 2) Add token to payload
-  // ----------------------------------------------------
-  const payload = {
-    name: formData.fullName,
-    companyName: formData.companyName,
-    country: formData.country,
-    email: formData.email,
-    number: formData.whatsappNumber,
-    recaptchaToken, // ⬅ VERY IMPORTANT
-  };
-
-  // ----------------------------------------------------
-  // 🔥 3) Send to backend
-  // ----------------------------------------------------
-  try {
-    const res = await fetch(`https://backend-instant-quote.vercel.app/save-basic`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-    });
-    const data = await res.json();
-
-    if (!data.success) {
-      console.error("save-basic error:", data.error);
-      window.alert(data.error || "Failed to save basic info.");
+  const saveBasicToServer = async (): Promise<string | null> => {
+    if (!isCountrySupported(formData.country)) {
+      window.alert("Selected country is not supported for API saving. The form will continue but data will not be saved remotely.");
       return null;
     }
 
-    return data.id || null;
+    const payload = {
+      name: formData.fullName,
+      companyName: formData.companyName,
+      country: formData.country,
+      email: formData.email,
+      number: formData.whatsappNumber,
+    };
 
-  } catch (err) {
-    console.error("Network error saving basic info:", err);
-    window.alert("Network error while saving basic info.");
-    return null;
-  }
-};
+    try {
+      const res = await fetch(`https://backend-instant-quote.vercel.app/save-basic`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      if (!res.ok) {
+        const errorData = await res.json();
+        console.error("save-basic error:", errorData);
+        window.alert(errorData.error || "Failed to save basic info. You can still continue.");
+        return null;
+      }
+
+      const data = await res.json();
+      if (data && data.id) return data.id;
+      return null;
+    } catch (err) {
+      console.error("Network error saving basic info:", err);
+      window.alert("Network error while saving basic info. You can still continue.");
+      return null;
+    }
+  };
 
   const handleNextFromStep1 = async () => {
-
     if (!validateStep(1)) return;
 
     if (isLoadingStep1) return;
 
     setIsLoadingStep1(true);
-
     setCountdown(7);
 
     const apiPromise = saveBasicToServer();
-
     const minLoadingTime = new Promise((r) => setTimeout(r, 7000));
-
     const [id] = await Promise.all([apiPromise, minLoadingTime]);
 
     if (id) {
-
       setSavedId(id);
-
-      trackStepCompletion();
-
       trackEvent("basic_info_saved", "QuotationTool", `SavedId:${id}`);
-
     } else {
-
       trackEvent("basic_info_save_failed", "QuotationTool", "Save failed or no id returned");
-
     }
 
     setIsLoadingStep1(false);
-
     setCountdown(0);
-
     setCurrentStep(2);
-
   };
 
   const handleSubmit = async () => {
     if (!validateStep(1) || !validateStep(2) || !validateStep(3)) return;
 
-   // 🔥 STEP 3 COMPLETION TRACKING INSERTION 🔥
-    // This tracks that the user successfully completed the final step fields
-    trackStepCompletion('step_3');
-       
     setIsSubmitting(true);
     trackEvent("quote_submit_started", "QuotationTool", "Quote Submission Started");
 
@@ -1526,8 +1320,7 @@ const saveBasicToServer = async (): Promise<string | null> => {
           </h1>
 
           <p className="md:text-xl text-lg text-white max-w-[320px] md:max-w-3xl mx-auto">Know your website cost in under 2 minutes with no commitment — transparent, automatic, and secure</p>
-          <p className="md:text-xl text-md text-[#ff1f00] max-w-[320px] md:max-w-3xl mx-auto">BLACK FRIDAY: 50% OFF YOUR FINAL WEBSITE QUOTE — Ends on 1 Dec 2025</p>
-           <div className="flex flex-wrap max-md:max-w-[320px] items-center justify-center mt-5 gap-2 mx-auto md:gap-4">
+          <div className="flex flex-wrap max-md:max-w-[320px] items-center justify-center mt-5 gap-2 mx-auto md:gap-4">
   <div className="inline-flex items-center gap-2 rounded-full border border-gray-800 bg-[#0b0b0b] px-4 py-2">
     <Lock size={16} className="text-[#ff1f00]" />
     <span className="text-sm font-medium text-white">SSL Encrypted</span>
@@ -1595,7 +1388,7 @@ const saveBasicToServer = async (): Promise<string | null> => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-sm font-medium text-white mb-2">Full Name</label>
-                  <input type="text" value={formData.fullName} onChange={(e) => handleInput("fullName", e.target.value)} onBlur={() => trackFieldInteraction('full_name')} placeholder="Enter your full name" className="w-full px-4 py-3 rounded-lg bg-[#0b0b0b] text-[#e5e7eb]
+                  <input type="text" value={formData.fullName} onChange={(e) => handleInput("fullName", e.target.value)} placeholder="Enter your full name" className="w-full px-4 py-3 rounded-lg bg-[#0b0b0b] text-[#e5e7eb]
                border border-[#1f2937]
                outline-none focus:outline-none
                ring-0 focus:ring-0 focus:ring-offset-0
@@ -1606,7 +1399,7 @@ const saveBasicToServer = async (): Promise<string | null> => {
 
                 <div>
                   <label className="block text-sm font-medium text-white mb-2">Company Name</label>
-                  <input type="text" value={formData.companyName} onChange={(e) => handleInput("companyName", e.target.value)} onBlur={() => trackFieldInteraction('company_name')} placeholder="Enter your company name" className="w-full px-4 py-3 rounded-lg bg-[#0b0b0b] text-[#e5e7eb]
+                  <input type="text" value={formData.companyName} onChange={(e) => handleInput("companyName", e.target.value)} placeholder="Enter your company name" className="w-full px-4 py-3 rounded-lg bg-[#0b0b0b] text-[#e5e7eb]
                border border-[#1f2937]
                outline-none focus:outline-none
                ring-0 focus:ring-0 focus:ring-offset-0
@@ -1617,7 +1410,7 @@ const saveBasicToServer = async (): Promise<string | null> => {
 
               <div>
                 <label className="block text-sm font-medium text-white mb-2">Country</label>
-                <select value={formData.country} onChange={(e) => { handleInput("country", e.target.value as CountryKey); trackFieldInteraction('country_select');}} className="w-full px-4 py-3  rounded-lg focus:ring-2 focus:ring-red-700 focus:border-red-700   bg-[#0b0b0b] border border-[#1f2937] text-[#e5e7eb]" disabled={isLoadingStep1}>
+                <select value={formData.country} onChange={(e) => handleInput("country", e.target.value as CountryKey)} className="w-full px-4 py-3  rounded-lg focus:ring-2 focus:ring-red-700 focus:border-red-700   bg-[#0b0b0b] border border-[#1f2937] text-[#e5e7eb]" disabled={isLoadingStep1}>
                   <option value="">Select your country</option>
                   {COUNTRY_OPTIONS.map((c) => <option key={c} value={c}>{c}</option>)}
                 </select>
@@ -1770,27 +1563,22 @@ div:has(input[type="radio"]:checked) { border-color: #b91c1c !important; }
 
 
 
-                <label className="block text-sm font-medium text-white mb-2 ">WhatsApp Number</label>
-<PhoneInputComponent
-  value={formData.whatsappNumber}
-onChange={(value, country) => handleWhatsAppInput(value, country)} 
-  onBlur={() => { // ADD THIS BLOCK
-    if (formData.whatsappNumber && formData.whatsappNumber.length > 5) {
-      trackFieldInteraction('whatsapp_number', 'step_1');
-    }
-  }}
-  selectedCountry={selectedPhoneCountry}
-  disabled={isLoadingStep1}
-  placeholder="Enter phone number"
-  onCountryChange={handleCountryChange}
-/>
-
+                  <label className="block text-sm font-medium text-white mb-2 ">WhatsApp Number</label>
+                  <PhoneInputComponent
+                    value={formData.whatsappNumber}
+                    onChange={handleWhatsAppInput}
+                    selectedCountry={selectedPhoneCountry}
+                    disabled={isLoadingStep1}
+                    placeholder="Enter phone number"
+                    onCountryChange={handleCountryChange}
+                    
+  />
                   {errors.whatsappNumber && <p className="text-[#ff1f00] text-sm mt-1">{errors.whatsappNumber}</p>}
                 </div>
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">Email</label>
-                  <input type="email" value={formData.email} onChange={(e) => handleInput("email", e.target.value)} onBlur={() => trackFieldInteraction('email')} placeholder="Enter your email" className="w-full px-4 py-3 rounded-lg bg-[#0b0b0b] text-[#e5e7eb]
+                  <input type="email" value={formData.email} onChange={(e) => handleInput("email", e.target.value)} placeholder="Enter your email" className="w-full px-4 py-3 rounded-lg bg-[#0b0b0b] text-[#e5e7eb]
                border border-[#1f2937]
                outline-none focus:outline-none
                ring-0 focus:ring-0 focus:ring-offset-0
@@ -1837,7 +1625,7 @@ onChange={(value, country) => handleWhatsAppInput(value, country)}
       { value: "ecommerce", label: "E-Commerce Website" },
     ].map((o) => (
       <label key={o.value} className="flex items-center p-4 focus:ring-2 focus:ring-red-700 focus:border-red-700   bg-[#0b0b0b] border border-[#1f2937] text-[#e5e7eb] rounded-lg">
-        <input type="radio" name="websiteType" value={o.value} checked={formData.websiteType === (o.value as any)} onChange={(e) => { handleInput("websiteType", e.target.value as any); trackFieldInteraction('website_type', 'step_2'); }} className="w-4 h-4 text-blue-600 border-gray-300" />
+        <input type="radio" name="websiteType" value={o.value} checked={formData.websiteType === (o.value as any)} onChange={(e) => handleInput("websiteType", e.target.value as any)} className="w-4 h-4 text-blue-600 border-gray-300" />
         <span className="ml-3 text-sm font-medium text-gray-700">{o.label}</span>
       </label>
     ))}
@@ -1858,7 +1646,7 @@ onChange={(value, country) => handleWhatsAppInput(value, country)}
                         { value: "200-500", label: "200-500" },
                       ].map((o) => (
                         <label key={o.value} className="flex items-center p-3 focus:ring-2 focus:ring-red-700 focus:border-red-700   bg-[#0b0b0b] border border-[#1f2937] text-[#e5e7eb] rounded-lg">
-                          <input type="radio" name="products" value={o.value} checked={formData.products === (o.value as any)} onChange={(e) => { handleInput("products", e.target.value as any); trackFieldInteraction('product_count', 'step_2'); }} className="w-4 h-4 text-blue-600 border-gray-300" />
+                          <input type="radio" name="products" value={o.value} checked={formData.products === (o.value as any)} onChange={(e) => handleInput("products", e.target.value as any)} className="w-4 h-4 text-blue-600 border-gray-300" />
                           <span className="ml-3 text-sm text-gray-700">{o.label}</span>
                         </label>
                       ))}
@@ -1875,7 +1663,7 @@ onChange={(value, country) => handleWhatsAppInput(value, country)}
                           { value: "provide-training", label: "You Manage Uploads (With Training) → + MUR 4,000" },
                         ].map((o) => (
                           <label key={o.value} className="flex items-center p-3 focus:ring-2 focus:ring-red-700 focus:border-red-700   bg-[#0b0b0b] border border-[#1f2937] text-[#e5e7eb] rounded-lg">
-                            <input type="radio" name="insertProducts" value={o.value} checked={formData.insertProducts === (o.value as any)} onChange={(e) => { handleInput("insertProducts", e.target.value as any); trackFieldInteraction('product_upload_type', 'step_2'); }} className="w-4 h-4 text-blue-600 border-gray-300" />
+                            <input type="radio" name="insertProducts" value={o.value} checked={formData.insertProducts === (o.value as any)} onChange={(e) => handleInput("insertProducts", e.target.value as any)} className="w-4 h-4 text-blue-600 border-gray-300" />
                             <span className="ml-3 text-sm text-gray-700">{o.label}</span>
                           </label>
                         ))}
@@ -1897,7 +1685,7 @@ onChange={(value, country) => handleWhatsAppInput(value, country)}
                       { value: "15+", label: "15+" },
                     ].map((o) => (
                       <label key={o.value} className="flex items-center p-3 focus:ring-2 focus:ring-red-700 focus:border-red-700   bg-[#0b0b0b] border border-[#1f2937] text-[#e5e7eb] rounded-lg">
-                        <input type="radio" name="pages" value={o.value} checked={formData.pages === (o.value as any)} onChange={(e) => { handleInput("pages", e.target.value as any); trackFieldInteraction('page_count', 'step_2'); }} className="w-4 h-4 text-blue-600 border-gray-300" />
+                        <input type="radio" name="pages" value={o.value} checked={formData.pages === (o.value as any)} onChange={(e) => handleInput("pages", e.target.value as any)} className="w-4 h-4 text-blue-600 border-gray-300" />
                         <span className="ml-3 text-sm text-gray-700">{o.label}</span>
                       </label>
                     ))}
@@ -1916,7 +1704,7 @@ onChange={(value, country) => handleWhatsAppInput(value, country)}
                     { value: "Unsure — Guide Me", label: "Unsure — Guide Me" },
                   ].map((o) => (
                     <label key={o.value} className="flex items-center p-3 focus:ring-2 focus:ring-red-700 focus:border-red-700   bg-[#0b0b0b] border border-[#1f2937] text-[#e5e7eb] rounded-lg">
-                      <input type="radio" name="designStyle" value={o.value} checked={formData.designStyle === (o.value as any)} onChange={(e) => { handleInput("designStyle", e.target.value as any); trackFieldInteraction('design_style', 'step_2'); }} className="w-4 h-4 text-blue-600 border-gray-300" />
+                      <input type="radio" name="designStyle" value={o.value} checked={formData.designStyle === (o.value as any)} onChange={(e) => handleInput("designStyle", e.target.value as any)} className="w-4 h-4 text-blue-600 border-gray-300" />
                       <span className="ml-3 text-sm text-white">{o.label}</span>
                     </label>
                   ))}
@@ -1939,7 +1727,7 @@ onChange={(value, country) => handleWhatsAppInput(value, country)}
                     { value: "newsletter", label: "Newsletter" },
                   ] as { value: FeatureKey; label: string }[]).map((o) => (
                     <label key={o.value} className="flex items-center p-3 focus:ring-2 focus:ring-red-700 focus:border-red-700   bg-[#0b0b0b] border border-[#1f2937] text-[#e5e7eb] rounded-lg">
-                      <input type="checkbox" checked={formData.features.includes(o.value)} onChange={() => { toggleFeature(o.value); trackFieldInteraction('feature_checkbox', 'step_2'); }} className="w-4 h-4 accent-red-700 border-gray-300 focus:ring-red-700" />
+                      <input type="checkbox" checked={formData.features.includes(o.value)} onChange={() => toggleFeature(o.value)} className="w-4 h-4 accent-red-700 border-gray-300 focus:ring-red-700" />
                       <span className="ml-3 text-sm text-white">{o.label}</span>
                     </label>
                   ))}
@@ -1977,7 +1765,7 @@ onChange={(value, country) => handleWhatsAppInput(value, country)}
                     { value: "<2-weeks", label: "<2 weeks (Fastest Delivery)" },
                   ].map((o) => (
                     <label key={o.value} className="flex items-center p-3 focus:ring-2 focus:ring-red-700 focus:border-red-700   bg-[#0b0b0b] border border-[#1f2937] text-[#e5e7eb] rounded-lg">
-                      <input type="radio" name="timeline" value={o.value} checked={formData.timeline === (o.value as any)} onChange={(e) => { handleInput("timeline", e.target.value as any); trackFieldInteraction('timeline', 'step_3'); }} className="w-4 h-4 text-blue-600 border-gray-300" />
+                      <input type="radio" name="timeline" value={o.value} checked={formData.timeline === (o.value as any)} onChange={(e) => handleInput("timeline", e.target.value as any)} className="w-4 h-4 text-blue-600 border-gray-300" />
                       <span className="ml-3 text-sm text-gray-700">{o.label}</span>
                     </label>
                   ))}
@@ -1993,7 +1781,7 @@ onChange={(value, country) => handleWhatsAppInput(value, country)}
                     { value: "Hosting Managed by Client", label: "Hosting Managed by Client" },
                   ].map((o) => (
                     <label key={o.value} className="flex items-center p-3  focus:ring-2 focus:ring-red-700 focus:border-red-700   bg-[#0b0b0b] border border-[#1f2937] text-[#e5e7eb] rounded-lg">
-                      <input type="radio" name="hosting" value={o.value} checked={formData.hosting === (o.value as any)} onChange={(e) => { handleInput("hosting", e.target.value as any); trackFieldInteraction('hosting', 'step_3'); }} className="w-4 h-4 text-blue-600 border-gray-300" />
+                      <input type="radio" name="hosting" value={o.value} checked={formData.hosting === (o.value as any)} onChange={(e) => handleInput("hosting", e.target.value as any)} className="w-4 h-4 text-blue-600 border-gray-300" />
                       <span className="ml-3 text-sm text-white">{o.label}</span>
                     </label>
                   ))}
@@ -2009,7 +1797,7 @@ onChange={(value, country) => handleWhatsAppInput(value, country)}
                     { value: "client", label: "Domain Managed by Client → No change" },
                   ].map((o) => (
                     <label key={o.value} className="flex items-center p-3 focus:ring-2 focus:ring-red-700 focus:border-red-700   bg-[#0b0b0b] border border-[#1f2937] text-[#e5e7eb] rounded-lg">
-                      <input type="radio" name="domain" value={o.value} checked={formData.domain === (o.value as any)} onChange={(e) => { handleInput("domain", e.target.value as any); trackFieldInteraction('domain', 'step_3'); }} className="w-4 h-4 text-blue-600 border-gray-300" />
+                      <input type="radio" name="domain" value={o.value} checked={formData.domain === (o.value as any)} onChange={(e) => handleInput("domain", e.target.value as any)} className="w-4 h-4 text-blue-600 border-gray-300" />
                       <span className="ml-3 text-sm text-white">{o.label}</span>
                     </label>
                   ))}
@@ -2019,7 +1807,7 @@ onChange={(value, country) => handleWhatsAppInput(value, country)}
 
               <div>
                 <label className="block text-sm font-medium text-white mb-2">Comments</label>
-                <textarea value={formData.comments} onChange={(e) => { handleInput("comments", e.target.value); trackFieldInteraction('comments', 'step_3'); }} rows={4} className="w-full px-4 py-3 focus:ring-red-700 focus:border-red-700   bg-[#0b0b0b] border border-[#1f2937] text-[#e5e7eb] rounded-lg" placeholder="Any additional comments or requirements..." />
+                <textarea value={formData.comments} onChange={(e) => handleInput("comments", e.target.value)} rows={4} className="w-full px-4 py-3 focus:ring-red-700 focus:border-red-700   bg-[#0b0b0b] border border-[#1f2937] text-[#e5e7eb] rounded-lg" placeholder="Any additional comments or requirements..." />
               </div>
             </div>
           )}
@@ -2140,11 +1928,11 @@ onChange={(value, country) => handleWhatsAppInput(value, country)}
         </div>
        <p className="text-center text-sm mt-5 text-[#e5e7eb]">
   By continuing, you agree to our{" "}
-  <a href="https://www.bim.africa/TermsofService" target="_blank" rel="noopener noreferrer" className="text-[#ff1f00] hover:underline">
+  <a href="/terms" className="text-[#ff1f00] hover:underline">
     Terms of Service
   </a>{" "}
   and{" "}
-  <a href="https://www.bim.africa/PrivacyPolicy" target="_blank" rel="noopener noreferrer" className="text-[#ff1f00] hover:underline">
+  <a href="/privacy" className="text-[#ff1f00] hover:underline">
     Privacy Policy
   </a>
 </p>
