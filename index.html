@@ -129,6 +129,8 @@ fbq('track', 'PageView');
         f.parentNode.insertBefore(j,f);
       })(window,document,'script','dataLayer','GTM-5KB7CNQJ');
     </script>
+    
+
 
   </head>
 
@@ -145,7 +147,15 @@ fbq('track', 'PageView');
     </noscript>
 
     <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
 
-  </body>
+<!-- 🔥 Correct reCAPTCHA v3 script placement -->
+<script 
+  src="https://www.google.com/recaptcha/api.js?render=6LcPmRgsAAAAAK2lz2Pf-iR5l-yV7x98mKR3GMFj"
+  async defer>
+</script>
+
+<!-- Your React App -->
+<script type="module" src="/src/main.tsx"></script>
+
+</body>
 </html>

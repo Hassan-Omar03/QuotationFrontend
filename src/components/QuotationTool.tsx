@@ -5,21 +5,46 @@ import mobile from "../Assests/new.jpeg";
 import selected from "../Assests/selected.png";
 import nonselected from "../Assests/nonselected.png";
 import header from "../Assests/HEADER.png";
-
-
-
 /* -----------------------
-   Types & Constants
+   Types & Constant
+
    ----------------------- */
+
+
+   // -----------------------------
+// reCAPTCHA v3 function
+const RECAPTCHA_SITE_KEY = "6LcPmRgsAAAAAK2lz2Pf-iR5l-yV7x98mKR3GMFj";
+
+const getRecaptchaToken = (action = "basic_info"): Promise<string | null> => {
+  return new Promise((resolve) => {
+    if (!(window as any).grecaptcha) {
+      console.error("⚠️ grecaptcha not loaded");
+      return resolve(null);
+    }
+
+    (window as any).grecaptcha.ready(() => {
+      (window as any).grecaptcha
+        .execute(RECAPTCHA_SITE_KEY, { action })
+        .then((token: string) => {
+          console.log("🔥 reCAPTCHA token:", token);
+          resolve(token || null);
+        })
+        .catch((err: any) => {
+          console.error("❌ grecaptcha.execute error:", err);
+          resolve(null);
+        });
+    });
+  });
+};
+
 
 declare global {
   interface Window {
     dataLayer: any[];
     gtag: (...args: any[]) => void;
-    grecaptcha: any; // 👈 ADD THIS
   }
 }
-const RECAPTCHA_SITE_KEY = "6LcPmRgsAAAAAK2lz2Pf-iR5l-yV7x98mKR3GMFj"; // Replace with your actual site key
+
 type CountryKey =
   | "Australia"
   | "Austria"
@@ -717,25 +742,6 @@ const [countdown, setCountdown] = useState(0);
 const [selectedPhoneCountry, setSelectedPhoneCountry] = useState("mu"); // iso2 code
 
 
-
-
- // Load Google reCAPTCHA script once (Step 1 protection)
-   // Load Google reCAPTCHA script once (Step 1 protection)
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-
-    // already loaded? skip
-    if (document.querySelector('script[src*="recaptcha/enterprise.js"]')) return;
-
-    const script = document.createElement("script");
-    script.src = `https://www.google.com/recaptcha/enterprise.js?render=${RECAPTCHA_SITE_KEY}`;
-    script.async = true;
-    script.defer = true;
-    document.head.appendChild(script);
-  }, []);
-
-
-
 /* --------------------------
    URL SYNC WITH HISTORY API
 --------------------------- */
@@ -1090,59 +1096,20 @@ useEffect(() => {
 
   const validateStep = (step: number): boolean => {
     const newErrors: Record<string, string> = {};
-if (step === 1) {
 
-  /* =====================
-       FULL NAME
-  ===================== */
-  if (!formData.fullName.trim()) {
-    newErrors.fullName = "Full name is required";
-  } else if (formData.fullName.trim().length < 7) {
-    newErrors.fullName = "Full name minimum character: 7";
-  } else if (formData.fullName.trim().length >= 7 && formData.fullName.trim().length < 20) {
-    // OPTIONAL stricter check, but error message you want:
-    newErrors.fullName = "Invalid input. Please use a full name";
-  }
+    if (step === 1) {
+      if (!formData.fullName.trim()) newErrors.fullName = "Full name is required";
+      if (!formData.country) newErrors.country = "Please select your country";
 
-  /* =====================
-       COMPANY NAME
-  ===================== */
-  if (!formData.companyName.trim()) {
-    newErrors.companyName = "Company name is required";
-  } else if (formData.companyName.trim().length < 7) {
-    newErrors.companyName = "Company name minimum character: 7";
-  } else if (formData.companyName.trim().length >= 7 && formData.companyName.trim().length < 20) {
-    newErrors.companyName = "Invalid input. Company name should be full";
-  }
+      if (!formData.whatsappNumber.trim()) {
+        newErrors.whatsappNumber = "WhatsApp number is required";
+      } else if (!isValidPhone(formData.whatsappNumber)) {
+        newErrors.whatsappNumber = "Please enter a valid phone number (include country code or enter local number). Must be between 9 and 17 digits.";
+      }
 
-  /* =====================
-       COUNTRY
-  ===================== */
-  if (!formData.country) {
-    newErrors.country = "Please select your country";
-  }
-
-  /* =====================
-       WHATSAPP NUMBER
-  ===================== */
-  if (!formData.whatsappNumber.trim()) {
-    newErrors.whatsappNumber = "WhatsApp number is required";
-  } else if (!isValidPhone(formData.whatsappNumber)) {
-    newErrors.whatsappNumber =
-      "Please enter a valid phone number (include country code). Must be between 9 and 17 digits.";
-  }
-
-  /* =====================
-         EMAIL
-  ===================== */
-  if (!formData.email.trim()) {
-    newErrors.email = "Email is required";
-  } else if (formData.email.trim().length < 10) {
-    newErrors.email = "Email minimum character: 10";
-  } else if (!isValidEmail(formData.email)) {
-    newErrors.email = "Input rejected. Must use a valid professional email";
-  }
-}
+      if (!formData.email.trim()) newErrors.email = "Email is required";
+      else if (!isValidEmail(formData.email)) newErrors.email = "Email must be valid and include '@'";
+    }
 
     if (step === 2) {
       if (!formData.websiteType) newErrors.websiteType = "Please select website type";
@@ -1205,76 +1172,64 @@ const nextStep = () => {
     return !!country && COUNTRY_OPTIONS.includes(country as CountryKey);
   };
 
-    const getRecaptchaToken = async (): Promise<string> => {
-    return new Promise((resolve, reject) => {
-      const waitFor = () => {
-        if (!window.grecaptcha || !window.grecaptcha.enterprise) {
-          return setTimeout(waitFor, 150);
-        }
+const saveBasicToServer = async (): Promise<string | null> => {
+  if (!isCountrySupported(formData.country)) {
+    window.alert(
+      "Selected country is not supported for API saving. The form will continue but data will not be saved remotely."
+    );
+    return null;
+  }
 
-        window.grecaptcha.enterprise.ready(async () => {
-          try {
-            const token = await window.grecaptcha.enterprise.execute(
-              RECAPTCHA_SITE_KEY,
-              { action: "basic_info" } // 👈 action name for Step 1
-            );
-            resolve(token);
-          } catch (err) {
-            reject(err);
-          }
-        });
-      };
+  // ----------------------------------------------------
+  // 🔥 1) Generate reCAPTCHA v3 token for STEP 1
+  // ----------------------------------------------------
+  let recaptchaToken: string | null = null;
+  try {
+    recaptchaToken = await getRecaptchaToken("basic_info");
+    if (!recaptchaToken) {
+      console.warn("⚠️ reCAPTCHA token missing. Continuing without token.");
+    }
+  } catch (err) {
+    console.error("reCAPTCHA token error:", err);
+  }
 
-      waitFor();
+  // ----------------------------------------------------
+  // 🔥 2) Add token to payload
+  // ----------------------------------------------------
+  const payload = {
+    name: formData.fullName,
+    companyName: formData.companyName,
+    country: formData.country,
+    email: formData.email,
+    number: formData.whatsappNumber,
+    recaptchaToken, // ⬅ VERY IMPORTANT
+  };
+
+  // ----------------------------------------------------
+  // 🔥 3) Send to backend
+  // ----------------------------------------------------
+  try {
+    const res = await fetch(`https://backend-instant-quote.vercel.app/save-basic`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
     });
-  };
+    const data = await res.json();
 
-
- 
-      const saveBasicToServer = async (): Promise<string | null> => {
-    if (!isCountrySupported(formData.country)) {
-      window.alert(
-        "Selected country is not supported for API saving. The form will continue but data will not be saved remotely."
-      );
+    if (!data.success) {
+      console.error("save-basic error:", data.error);
+      window.alert(data.error || "Failed to save basic info.");
       return null;
     }
 
-    try {
-      // 🔥 1) Get reCAPTCHA token for Step 1
-      const captchaToken = await getRecaptchaToken();
+    return data.id || null;
 
-      // 🔥 2) Include token in payload
-      const payload = {
-        name: formData.fullName,
-        companyName: formData.companyName,
-        country: formData.country,
-        email: formData.email,
-        number: formData.whatsappNumber,
-        captchaToken, // 👈 IMPORTANT
-      };
-
-      const res = await fetch(`https://backend-instant-quote.vercel.app/save-basic`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
-
-      if (!res.ok) {
-        const errorData = await res.json();
-        console.error("save-basic error:", errorData);
-        window.alert(errorData.error || "Failed to save basic info. You can still continue.");
-        return null;
-      }
-
-      const data = await res.json();
-      if (data && data.id) return data.id;
-      return null;
-    } catch (err) {
-      console.error("Network error saving basic info:", err);
-      window.alert("Network error while saving basic info. You can still continue.");
-      return null;
-    }
-  };
+  } catch (err) {
+    console.error("Network error saving basic info:", err);
+    window.alert("Network error while saving basic info.");
+    return null;
+  }
+};
 
   const handleNextFromStep1 = async () => {
 
@@ -1571,8 +1526,7 @@ const nextStep = () => {
           </h1>
 
           <p className="md:text-xl text-lg text-white max-w-[320px] md:max-w-3xl mx-auto">Know your website cost in under 2 minutes with no commitment — transparent, automatic, and secure</p>
-          <br></br>
-           <p className="md:ml-3 ml-1 max-sm:text-[13px] sm:text-sm font-medium text-white"> <span className="text-[#ff1f00]">Black Friday: </span> 50% Off Your Final Website Quote — Ends on 1 December 2025</p>
+          <p className="md:text-xl text-md text-[#ff1f00] max-w-[320px] md:max-w-3xl mx-auto">BLACK FRIDAY: 50% OFF YOUR FINAL WEBSITE QUOTE — Ends on 1 Dec 2025</p>
            <div className="flex flex-wrap max-md:max-w-[320px] items-center justify-center mt-5 gap-2 mx-auto md:gap-4">
   <div className="inline-flex items-center gap-2 rounded-full border border-gray-800 bg-[#0b0b0b] px-4 py-2">
     <Lock size={16} className="text-[#ff1f00]" />
