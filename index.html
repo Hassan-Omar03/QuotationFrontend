@@ -6,10 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <!-- 🔥 Primary SEO -->
-    <title>BIM Africa – Instant Website Design & Development Quotation Tool | Real-Time Pricing</title>
+    <title>BIM Africa – Instant Website Quotation Tool | Real-Time Pricing</title>
     <meta
       name="description"
-      content="Get an instant and accurate website quotation with BIM Africa’s smart estimator. Real-time pricing for web development, branding, and digital projects in Europe, Mauritius, and Luxembourg."
+      content="Get an instant and accurate website quotation with BIM Africa’s smart estimator. Real-time pricing for web development, branding, and digital projects in Africa, Mauritius, and Luxembourg."
     />
     <meta name="robots" content="index, follow" />
     <meta name="author" content="BIM Africa - Brand Image Marketer Ltd" />
@@ -29,18 +29,21 @@
     <meta property="og:locale" content="en_US" />
     <meta property="og:site_name" content="BIM Africa" />
     <meta property="og:image" content="https://quotation.bim.africa/logo.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
 
     <!-- 🐦 Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="BIM Africa – Instant Website Quotation Tool" />
     <meta name="twitter:description" content="Generate fast and accurate project quotations with BIM Africa’s instant estimator." />
     <meta name="twitter:image" content="https://quotation.bim.africa/logo.png" />
+    <meta name="twitter:site" content="@bimafrica" />
 
     <!-- 📱 PWA + Icons -->
     <meta name="theme-color" content="#ffffff" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
-    <link rel="icon" type="image/png" sizes="32x32.png" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="shortcut icon" href="/favicon.ico" />
@@ -51,7 +54,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
     <!-- 🧩 JSON-LD: Organization -->
-    <script type="application/json+ld">
+    <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "Organization",
@@ -70,7 +73,7 @@
     </script>
 
     <!-- 🧩 JSON-LD: WebPage -->
-    <script type="application/json+ld">
+    <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "WebPage",
@@ -88,8 +91,8 @@
     }
     </script>
 
-    <!-- 🧩 JSON-LD: Website Search -->
-    <script type="application/json+ld">
+    <!-- 🧩 JSON-LD: Website Search Box -->
+    <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "WebSite",
@@ -101,61 +104,10 @@
       }
     }
     </script>
-
-<!-- Meta Pixel Code -->
-<script>
-!function(f,b,e,v,n,t,s)
-{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-n.queue=[];t=b.createElement(e);t.async=!0;
-t.src=v;s=b.getElementsByTagName(e)[0];
-s.parentNode.insertBefore(t,s)}(window, document,'script',
-'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', '1775802576407904');
-fbq('track', 'PageView');
-</script>
-
-<!-- End Meta Pixel Code -->
-    
-    <!-- Google Tag Manager -->
-    <script>
-      (function(w,d,s,l,i){
-        w[l]=w[l]||[];
-        w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});
-        var f=d.getElementsByTagName(s)[0],
-        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';
-        j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
-        f.parentNode.insertBefore(j,f);
-      })(window,document,'script','dataLayer','GTM-5KB7CNQJ');
-    </script>
-    
-
-
   </head>
 
   <body>
-    <!-- Pixel (noscript) -->
-    <noscript><img height="1" width="1" style="display:none"
-    src="https://www.facebook.com/tr?id=1775802576407904&ev=PageView&noscript=1"
-    /></noscript>
-    
-    <!-- Google Tag Manager (noscript) -->
-    <noscript>
-      <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5KB7CNQJ"
-      height="0" width="0" style="display:none;visibility:hidden"></iframe>
-    </noscript>
-
     <div id="root"></div>
-
-<!-- 🔥 Correct reCAPTCHA v3 script placement -->
-<script 
-  src="https://www.google.com/recaptcha/api.js?render=6LcPmRgsAAAAAK2lz2Pf-iR5l-yV7x98mKR3GMFj"
-  async defer>
-</script>
-
-<!-- Your React App -->
-<script type="module" src="/src/main.tsx"></script>
-
-</body>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
 </html>
