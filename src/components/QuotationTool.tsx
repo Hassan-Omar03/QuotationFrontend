@@ -1090,20 +1090,59 @@ useEffect(() => {
 
   const validateStep = (step: number): boolean => {
     const newErrors: Record<string, string> = {};
+if (step === 1) {
 
-    if (step === 1) {
-      if (!formData.fullName.trim()) newErrors.fullName = "Full name is required";
-      if (!formData.country) newErrors.country = "Please select your country";
+  /* =====================
+       FULL NAME
+  ===================== */
+  if (!formData.fullName.trim()) {
+    newErrors.fullName = "Full name is required";
+  } else if (formData.fullName.trim().length < 7) {
+    newErrors.fullName = "Full name minimum character: 7";
+  } else if (formData.fullName.trim().length >= 7 && formData.fullName.trim().length < 20) {
+    // OPTIONAL stricter check, but error message you want:
+    newErrors.fullName = "Invalid input. Please use a full name";
+  }
 
-      if (!formData.whatsappNumber.trim()) {
-        newErrors.whatsappNumber = "WhatsApp number is required";
-      } else if (!isValidPhone(formData.whatsappNumber)) {
-        newErrors.whatsappNumber = "Please enter a valid phone number (include country code or enter local number). Must be between 9 and 17 digits.";
-      }
+  /* =====================
+       COMPANY NAME
+  ===================== */
+  if (!formData.companyName.trim()) {
+    newErrors.companyName = "Company name is required";
+  } else if (formData.companyName.trim().length < 7) {
+    newErrors.companyName = "Company name minimum character: 7";
+  } else if (formData.companyName.trim().length >= 7 && formData.companyName.trim().length < 20) {
+    newErrors.companyName = "Invalid input. Company name should be full";
+  }
 
-      if (!formData.email.trim()) newErrors.email = "Email is required";
-      else if (!isValidEmail(formData.email)) newErrors.email = "Email must be valid and include '@'";
-    }
+  /* =====================
+       COUNTRY
+  ===================== */
+  if (!formData.country) {
+    newErrors.country = "Please select your country";
+  }
+
+  /* =====================
+       WHATSAPP NUMBER
+  ===================== */
+  if (!formData.whatsappNumber.trim()) {
+    newErrors.whatsappNumber = "WhatsApp number is required";
+  } else if (!isValidPhone(formData.whatsappNumber)) {
+    newErrors.whatsappNumber =
+      "Please enter a valid phone number (include country code). Must be between 9 and 17 digits.";
+  }
+
+  /* =====================
+         EMAIL
+  ===================== */
+  if (!formData.email.trim()) {
+    newErrors.email = "Email is required";
+  } else if (formData.email.trim().length < 10) {
+    newErrors.email = "Email minimum character: 10";
+  } else if (!isValidEmail(formData.email)) {
+    newErrors.email = "Input rejected. Must use a valid professional email";
+  }
+}
 
     if (step === 2) {
       if (!formData.websiteType) newErrors.websiteType = "Please select website type";
