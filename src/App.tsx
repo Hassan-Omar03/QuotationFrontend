@@ -1,7 +1,6 @@
 // src/App.tsx
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Helmet, HelmetProvider } from "react-helmet-async";
 import BackGround from "./Assests/srv.svg";
 import logo from "./Assests/newlogo.png";
 import header from "./Assests/HEADER.png"; // toggle icon
@@ -78,124 +77,6 @@ function App() {
 
   return (
     <div>
-     <Helmet>
-
-  {/* Essential Meta */}
-  <meta charSet="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>BIM Africa – Instant Website Design & Development Quotation Tool | Real Time Pricing</title>
-
-  <meta
-    name="description"
-    content="BIM Africa delivers high-end digital solutions across Web Development, AI Engineering, Branding, Mobile Apps, SaaS, and Enterprise Systems in Mauritius & Luxembourg."
-  />
-
-  <meta
-    name="keywords"
-    content="BIM Africa, AI engineering, software development, branding, digital agency, mobile apps, web development, Mauritius, Luxembourg, SaaS development"
-  />
-
-  <meta name="robots" content="index, follow, max-image-preview:large" />
-  <meta name="author" content="BIM Africa" />
-  <link rel="canonical" href="https://www.bim.africa/" />
-
-  {/* Icons */}
-  <link rel="icon" href="/favicon.ico" />
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-
-  {/* Preload Critical Assets (ONLY above-the-fold) */}
-  <link rel="preload" as="image" href={logo} />
-
-  {/* Social Preview — OpenGraph */}
-  <meta property="og:title" content="BIM Africa – Elite Digital Solutions" />
-  <meta property="og:description" content="Elite digital solutions in Web, AI, Branding, SaaS, and Mobile App development." />
-  <meta property="og:image" content={header} />
-  <meta property="og:image:width" content="1200" />
-  <meta property="og:image:height" content="630" />
-  <meta property="og:url" content="https://www.bim.africa/" />
-  <meta property="og:type" content="website" />
-  <meta property="og:site_name" content="BIM Africa" />
-
-  {/* Twitter / X Cards */}
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="BIM Africa – Elite Digital Agency" />
-  <meta name="twitter:description" content="Web Development, Mobile Apps, AI, Branding & SaaS Solutions." />
-  <meta name="twitter:image" content={header} />
-
-  {/* Progressive Web App / UX */}
-  <meta name="theme-color" content="#000000" />
-  <meta name="mobile-web-app-capable" content="yes" />
-
-  {/* Combined JSON-LD (Best Practice) */}
-  <script type="application/ld+json">
-    {`
-    {
-      "@context": "https://schema.org",
-      "@graph": [
-        {
-          "@type": "Organization",
-          "name": "BIM Africa",
-          "url": "https://www.bim.africa",
-          "logo": "${logo}",
-          "description": "Elite digital solutions in Web, AI, Branding, and Mobile App development.",
-          "sameAs": [
-            "https://www.instagram.com/bimafrica",
-            "https://www.facebook.com/share/17Kr1c4mkp/",
-            "https://www.linkedin.com/company/bimafrica/"
-          ]
-        },
-        {
-          "@type": "WebSite",
-          "url": "https://www.bim.africa",
-          "potentialAction": {
-            "@type": "SearchAction",
-            "target": "https://www.bim.africa/?s={search_term_string}",
-            "query-input": "required name=search_term_string"
-          }
-        },
-        {
-          "@type": "Service",
-          "serviceType": "Digital Services & Software Development",
-          "provider": {
-            "@type": "Organization",
-            "name": "BIM Africa"
-          },
-          "areaServed": ["Mauritius", "Luxembourg", "Africa", "Global"],
-          "offers": {
-            "@type": "Offer",
-            "availability": "https://schema.org/InStock",
-            "price": "0",
-            "priceCurrency": "USD"
-          }
-        },
-        {
-          "@type": "BreadcrumbList",
-          "itemListElement": [
-            {
-              "@type": "ListItem",
-              "position": 1,
-              "name": "Home",
-              "item": "https://www.bim.africa/"
-            },
-            {
-              "@type": "ListItem",
-              "position": 2,
-              "name": "Services",
-              "item": "https://www.bim.africa/service"
-            }
-          ]
-        }
-      ]
-    }
-    `}
-  </script>
-
-</Helmet>
-
-
-
     <button
   onClick={handleWhatsAppClick}
   className="fixed bottom-10 right-4 md:right-6 z-[9999] bg-[#ff1f00] hover:bg-[#e1291c] text-white rounded-full p-4 shadow-lg transition-all duration-300 hover:shadow-xl pointer-events-auto "
@@ -550,8 +431,10 @@ function App() {
 >
   Contact us
 </a>
-                <a href="#" className="block text-white text-sm">Privacy Policy</a>
-                <a href="#" className="block text-white text-sm">Terms of Service</a>
+                <a href="https://www.bim.africa/PrivacyPolicy" target="_blank"
+  rel="noopener noreferrer" className="block text-white text-sm">Privacy Policy</a>
+                <a href="https://www.bim.africa/TermsofService" target="_blank"
+  rel="noopener noreferrer" className="block text-white text-sm">Terms of Service</a>
               </div>
             </div>
           </div>
@@ -609,9 +492,9 @@ function App() {
 
           {/* Bottom Links */}
           <div className="text-center text-white text-xs border-t border-gray-800 pt-6">
-            <a href="#" className="hover:text-[#ff1f00]">Privacy Policy</a>
+            <a href="https://www.bim.africa/PrivacyPolicy"  target="_blank" rel="noopener noreferrer" className="hover:text-[#ff1f00]">Privacy Policy</a>
             <span className="mx-2">|</span>
-            <a href="#" className="hover:text-[#ff1f00]">Terms of Service</a>
+            <a href="https://www.bim.africa/TermsofService" target="_blank" rel="noopener noreferrer" className="hover:text-[#ff1f00]">Terms of Service</a>
           </div>
         </div>
 
@@ -681,8 +564,10 @@ function App() {
   Contact Us
 </a>
 
-              <a href="#" className="block text-white hover:text-white text-xs sm:text-sm lg:text-base">Privacy Policy</a>
-              <a href="#" className="block text-white hover:text-white text-xs sm:text-sm lg:text-base">Terms of Service</a>
+              <a href="https://www.bim.africa/PrivacyPolicy"  target="_blank"
+  rel="noopener noreferrer" className="block text-white hover:text-white text-xs sm:text-sm lg:text-base">Privacy Policy</a>
+              <a href="https://www.bim.africa/TermsofService" target="_blank"
+  rel="noopener noreferrer" className="block text-white hover:text-white text-xs sm:text-sm lg:text-base">Terms of Service</a>
             </div>
           </div>
 
@@ -724,9 +609,9 @@ function App() {
 
         {/* Bottom Links */}
         <div className="hidden sm:block border-t border-gray-800 mt-6 sm:mt-8 lg:mt-12 pt-4 sm:pt-6 lg:pt-8 text-center text-white text-xs sm:text-sm">
-          <a href="#" className="hover:text-white">Privacy Policy</a>{" "}
+          <a href="https://www.bim.africa/PrivacyPolicy" target="_blank" rel="noopener noreferrer" className="hover:text-white">Privacy Policy</a>{" "}
           |{" "}
-          <a href="#" className="hover:text-white">Terms of Service</a>
+          <a href="https://www.bim.africa/TermsofService" target="_blank" rel="noopener noreferrer" className="hover:text-white">Terms of Service</a>
         </div>
       </div>
     </footer>
